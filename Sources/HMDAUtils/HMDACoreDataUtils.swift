@@ -32,7 +32,7 @@ public extension NSManagedObject {
         #endif
     }
     
-    func delete(in context: NSManagedObjectContext? = nil) {
+    func delete(in context: NSManagedObjectContext? = nil) throws {
         
         guard context != nil || NSManagedObject.viewContext != nil else {
             return
@@ -40,15 +40,15 @@ public extension NSManagedObject {
         
         if context != nil {
             context?.delete(self)
-            _ = try? context?.save()
+            try context?.save()
         } else {
             NSManagedObject.viewContext?.delete(self)
-            _ = try? NSManagedObject.viewContext?.save()
+            try NSManagedObject.viewContext?.save()
         }
         
     }
     
-    func save(in context: NSManagedObjectContext? = nil) {
+    func save(in context: NSManagedObjectContext? = nil) throws {
         
         guard context != nil || NSManagedObject.viewContext != nil else {
             return
@@ -57,13 +57,13 @@ public extension NSManagedObject {
         if context != nil {
             
             if context?.hasChanges ?? false {
-                _ = try? context?.save()
+                try context?.save()
             }
             
         } else {
             
             if NSManagedObject.viewContext?.hasChanges ?? false {
-                _ = try? NSManagedObject.viewContext?.save()
+                try NSManagedObject.viewContext?.save()
             }
             
         }
@@ -95,31 +95,26 @@ public extension NSManagedObject {
     }
     
     
-    class func allObjects<T: NSFetchRequestResult>(in context: NSManagedObjectContext? = nil) -> [T]? {
+    class func allObjects<T: NSFetchRequestResult>(in context: NSManagedObjectContext? = nil) throws -> [T]? {
         guard context != nil || NSManagedObject.viewContext != nil else {
             return nil
         }
         
         let request = NSFetchRequest<T>(entityName: String(describing: T.self))
         
-        do {
-            var requestResults: [T]?
-            
-            if context != nil {
-                requestResults = try context!.fetch(request)
-            } else {
-                requestResults = try NSManagedObject.viewContext!.fetch(request)
-            }
-            
-            guard (requestResults?.count ?? 0) > 0 else {
-                return nil
-            }
-            
-            return requestResults
-        } catch {
+        var requestResults: [T]?
+        
+        if context != nil {
+            requestResults = try context!.fetch(request)
+        } else {
+            requestResults = try NSManagedObject.viewContext!.fetch(request)
+        }
+        
+        guard (requestResults?.count ?? 0) > 0 else {
             return nil
         }
         
+        return requestResults
     }
     
 }
