@@ -17,7 +17,7 @@ import Cocoa
 import UIKit
 #endif
 
-public protocol HMDAAppDelegateMocEnabled {
+public protocol HMDAUtilsMOCContainer {
     var moc: NSManagedObjectContext? {get}
 }
 
@@ -25,13 +25,11 @@ public protocol HMDAAppDelegateMocEnabled {
 public extension NSManagedObject {
     
     class var viewContext: NSManagedObjectContext? {
-    
         #if os(macOS)
-        return (NSApplication.shared.delegate as? HMDAAppDelegateMocEnabled)?.moc
+        return (NSApplication.shared.delegate as? HMDAUtilsMOCContainer)?.moc
         #else
-        return (UIApplication.shared.delegate as? HMDAAppDelegateMocEnabled)?.moc
+        return (UIApplication.shared.delegate as? HMDAUtilsMOCContainer)?.moc
         #endif
-        
     }
     
     func delete(in context: NSManagedObjectContext? = nil) {
@@ -57,9 +55,17 @@ public extension NSManagedObject {
         }
         
         if context != nil {
-            _ = try? context?.save()
+            
+            if context?.hasChanges ?? false {
+                _ = try? context?.save()
+            }
+            
         } else {
-            _ = try? NSManagedObject.viewContext?.save()
+            
+            if NSManagedObject.viewContext?.hasChanges ?? false {
+                _ = try? NSManagedObject.viewContext?.save()
+            }
+            
         }
         
     }
