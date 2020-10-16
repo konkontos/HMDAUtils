@@ -34,52 +34,86 @@ public extension NSManagedObject {
         
     }
     
-    func delete() {
-        NSManagedObject.viewContext?.delete(self)
-        _ = try? NSManagedObject.viewContext?.save()
-    }
-    
-    func save() {
-        _ = try? NSManagedObject.viewContext?.save()
-    }
-    
-    class func newObject() -> Self? {
+    func delete(in context: NSManagedObjectContext? = nil) {
         
-        guard NSManagedObject.viewContext != nil else {
+        guard context != nil || NSManagedObject.viewContext != nil else {
+            return
+        }
+        
+        if context != nil {
+            context?.delete(self)
+            _ = try? context?.save()
+        } else {
+            NSManagedObject.viewContext?.delete(self)
+            _ = try? NSManagedObject.viewContext?.save()
+        }
+        
+    }
+    
+    func save(in context: NSManagedObjectContext? = nil) {
+        
+        guard context != nil || NSManagedObject.viewContext != nil else {
+            return
+        }
+        
+        if context != nil {
+            _ = try? context?.save()
+        } else {
+            _ = try? NSManagedObject.viewContext?.save()
+        }
+        
+    }
+    
+    class func new(in context: NSManagedObjectContext? = nil) -> Self? {
+        guard context != nil || NSManagedObject.viewContext != nil else {
             return nil
         }
         
+        var newObject: NSManagedObject?
         
-        let newObject = NSEntityDescription.insertNewObject(forEntityName: String(describing: self),
-                                                            into: NSManagedObject.viewContext!)
+        if context != nil {
+            newObject = NSEntityDescription
+                .insertNewObject(forEntityName: String(describing: self),
+                                 into: context!)
+        } else {
+            newObject = NSEntityDescription
+                .insertNewObject(forEntityName: String(describing: self),
+                                 into: NSManagedObject.viewContext!)
+        }
         
-        return unsafeDowncast(newObject, to: self)
+        guard newObject != nil else {
+            return nil
+        }
+        
+        return unsafeDowncast(newObject!, to: self)
     }
     
     
-    class func allObjects<T:NSFetchRequestResult>() -> [T]? {
-        
-        guard NSManagedObject.viewContext != nil else {
+    class func allObjects<T: NSFetchRequestResult>(in context: NSManagedObjectContext? = nil) -> [T]? {
+        guard context != nil || NSManagedObject.viewContext != nil else {
             return nil
         }
         
         let request = NSFetchRequest<T>(entityName: String(describing: T.self))
         
         do {
-            let requestResults = try NSManagedObject.viewContext!.fetch(request)
+            var requestResults: [T]?
             
-            guard requestResults.count > 0 else {
+            if context != nil {
+                requestResults = try context!.fetch(request)
+            } else {
+                requestResults = try NSManagedObject.viewContext!.fetch(request)
+            }
+            
+            guard (requestResults?.count ?? 0) > 0 else {
                 return nil
             }
             
             return requestResults
-        }
-        catch {
+        } catch {
             return nil
         }
         
     }
     
 }
-
-

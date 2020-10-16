@@ -20,23 +20,3 @@ public protocol CombineSubscriber {
 }
 
 #endif
-
-
-// #if targetEnvironment(macCatalyst)
-// #if targetEnvironment(simulator)
-// #if os(macOS)
-// #if os(iOS)
-// #if arch(x86_64)
-// #if arch(arm64)
-// #if arch(i386)
-// #if os(tvOS)
-// if #available(tvOS 9.1,*)
-// @available(iOS 9.0, *)
-// #if TARGET_OS_IOS
-// #if TARGET_OS_OSX
-// #if TARGET_OS_MACCATALYST
-// #if TARGET_OS_TV
-// #if TARGET_OS_SIMULATOR
-// #if canImport(UIKit) /* Check if a module presents */
-// #if swift(<5) /* Check the Swift version */
-// #if compiler(<7) /* Check compiler version */
