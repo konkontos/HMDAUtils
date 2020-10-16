@@ -94,7 +94,6 @@ public extension NSManagedObject {
         return unsafeDowncast(newObject!, to: self)
     }
     
-    
     class func allObjects<T: NSFetchRequestResult>(in context: NSManagedObjectContext? = nil) throws -> [T]? {
         guard context != nil || NSManagedObject.viewContext != nil else {
             return nil

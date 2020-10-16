@@ -15,6 +15,10 @@ import UIKit
 import Cocoa
 #endif
 
+#if canImport(CoreData)
+import CoreData
+#endif
+
 public typealias JSONObject = [String: Any]
 public typealias JSONArray = [JSONObject]
 public typealias NotificationDict = [AnyHashable : Any]
@@ -178,3 +182,17 @@ public extension Data {
     }
     
 }
+
+#if canImport(CoreData)
+public extension NSManagedObject {
+    
+    func decodedJSONPayload<T: Codable>(payloadKeyPath: String? = nil) -> T? {
+        guard let jsonData = value(forKeyPath: payloadKeyPath ?? "payload") as? Data else {
+            return nil
+        }
+        
+        return try? jsonData.decodedJSONData() as T
+    }
+    
+}
+#endif
