@@ -608,6 +608,11 @@ public extension FileManager {
         return URL(fileURLWithPath: NSTemporaryDirectory())
     }
     
+    class var applicationSupportFolder: URL {
+        let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+        return urls[urls.count - 1]
+    }
+    
     func sizeForItem(atFileURL url: URL) -> UInt64 {
         
         if let fileAttrs = try? self.attributesOfItem(atPath: url.path) {

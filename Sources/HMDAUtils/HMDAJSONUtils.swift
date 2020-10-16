@@ -7,6 +7,14 @@
 
 import Foundation
 
+#if canImport(UIKit)
+import UIKit
+#endif
+
+#if canImport(Cocoa)
+import Cocoa
+#endif
+
 public typealias JSONObject = [String: Any]
 public typealias JSONArray = [JSONObject]
 public typealias NotificationDict = [AnyHashable : Any]
@@ -63,6 +71,16 @@ public extension Dictionary {
 }
 
 public extension JSONSerialization {
+    
+    class func jsonObject(fromAssetNamed assetName: String) -> Any? {
+        
+        #if os(macOS)
+        return NSDataAsset(name: NSDataAsset.Name(assetName))?.data.jsonObject
+        #else
+        return NSDataAsset(name: NSDataAssetName(assetName))?.data.jsonObject
+        #endif
+        
+    }
     
     class func jsonObject(from pathURL: URL) -> Any? {
         return JSONSerialization.jsonObject(fromPath: pathURL.path)
@@ -139,6 +157,24 @@ public extension URL {
     
     var jsonObject: Any? {
         JSONSerialization.jsonObject(from: self)
+    }
+    
+}
+
+
+public extension Encodable {
+    
+    func jsonEncodedData() throws -> Data {
+        return try JSONEncoder().encode(self)
+    }
+    
+}
+
+
+public extension Data {
+    
+    func decodedJSONData<T: Decodable>() throws -> T {
+        return try JSONDecoder().decode(T.self, from: self)
     }
     
 }
