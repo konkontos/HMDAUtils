@@ -1,6 +1,6 @@
 //
 //  HMDAReachability.swift
-//  HMDAToolkit
+//  HMDAUtils
 //
 //  Created by Konstantinos Kontos on 02/11/2018.
 //  Thanks to: https://www.invasivecode.com/weblog/network-reachability-in-swift/

@@ -1,6 +1,6 @@
 //
 //  HMDACoreDataUtils.swift
-//  HMDAToolkit
+//  HMDAUtils
 //
 //  Created by Konstantinos Kontos on 24/3/20.
 //  Copyright © 2020 Handmade Apps Ltd. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  HMDATextInputValidator.swift
-//  HMDAToolkit
+//  HMDAUtils
 //
 //  Created by Konstantinos Kontos on 21/09/2018.
 //  Copyright © 2018 Handmade Apps Ltd. All rights reserved.

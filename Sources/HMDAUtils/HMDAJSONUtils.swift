@@ -1,6 +1,6 @@
 //
 //  HMDAReachability.swift
-//  HMDAToolkit
+//  HMDAUtils
 //
 //  Created by Konstantinos Kontos on 20/09/2016.
 //

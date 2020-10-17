@@ -1,6 +1,6 @@
 //
 //  HMDAConveniences.swift
-//  HMDAToolkit
+//  HMDAUtils
 //
 //  Created by Konstantinos Kontos on 16/10/20.
 //
