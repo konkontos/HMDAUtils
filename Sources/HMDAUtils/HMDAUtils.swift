@@ -31,25 +31,6 @@ public func mainQueueRun(code: @escaping VoidClosure) {
     }
 }
 
-public class GlobalURLSession: URLSession {
-    
-    static let sharedInstance = URLSession(configuration: GlobalURLSession.sessionConfig)
-    
-    static let timeout = 60
-    
-    class var sessionConfig: URLSessionConfiguration {
-        let sessionCache = URLCache(memoryCapacity: 1 * 1024 * 1024, diskCapacity: 10 * 1024 * 1024, diskPath: "http_cache")
-        
-        let sessionConfig = URLSessionConfiguration.default
-        sessionConfig.urlCache = sessionCache
-        sessionConfig.timeoutIntervalForRequest = Double(timeout)
-        sessionConfig.requestCachePolicy = NSURLRequest.CachePolicy.returnCacheDataElseLoad
-        
-        return sessionConfig
-    }
-    
-}
-
 #if canImport(UIKit)
 public extension UIDeviceOrientation {
     
