@@ -42,7 +42,7 @@ final class HMDADateUtilsTests: XCTestCase {
 
     func testDiffCalc() throws {
         let dateB = dateA.advanced(by: .weekOfMonth, value: 1)
-        XCTAssert(dateA.difference(to: dateB, granularity: .hour) == 168)
+        XCTAssert(dateA.difference(to: dateB, granularity: .hour) >= 168)
     }
     
     func testIsInSameWeek() throws {
@@ -86,7 +86,7 @@ final class HMDADateUtilsTests: XCTestCase {
                        second: 0
                        )
         
-        let dateB = DateInRegion.regionalDate(from: components)
+        let dateB = HMDADate.DateInRegion.regionalDate(from: components)
         
         XCTAssert(dateB.isWeekend)
     }
