@@ -7,7 +7,6 @@
 
 import XCTest
 @testable import HMDAUtils
-import HMDAUtils
 
 final class HMDADateUtilsTests: XCTestCase {
     let dateA = Date().regionalDate()

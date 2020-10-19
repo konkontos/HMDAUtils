@@ -11,40 +11,32 @@ import Foundation
 import UIKit
 #endif
 
-public extension Int {
+fileprivate extension ByteCountFormatter {
+
+    static var commonFormatter: ByteCountFormatter {
+        let formatter = ByteCountFormatter()
+        formatter.allowedUnits = [.useAll]
+        formatter.countStyle = .file
+        formatter.isAdaptive = false
+        
+        return formatter
+    }
     
-    var humanReadableFilesize: String {
+    static func commonFormatter(for units:  ByteCountFormatter.Units) -> ByteCountFormatter {
+        let formatter = ByteCountFormatter()
+        formatter.allowedUnits = units
+        formatter.countStyle = .file
+        formatter.isAdaptive = false
         
-        switch self {
-            
-        case ..<1024:
-            return "\(self) bytes"
-            
-        case 1024..<1024*1024:
-            return "\(self/1024) kb"
-            
-        case (1024*1024)..<(1024*1024*1024):
-            return "\(self/(1024*1024)) mb"
-        
-        case (1024*1024*1024)...:
-            return "\(self/(1024*1024*1024)) gb"
-            
-        default:
-            return ""
-        }
-        
+        return formatter
     }
     
 }
 
-public extension UInt64 {
+public extension FixedWidthInteger {
     
-    var inMB: Double {
-        return Double(self) / Double(1024.0 * 1024.0)
-    }
-    
-    var inGB: Double {
-        return Double(self) / Double(1024.0 * 1024.0 * 1024.0)
+    var humanReadableFilesize: String {
+        ByteCountFormatter.commonFormatter.string(fromByteCount: Int64(self))
     }
     
 }
