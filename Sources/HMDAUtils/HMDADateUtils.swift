@@ -17,7 +17,7 @@ public enum DateFormat {
     case iso8601DateOnly
     case iso8601DateTime
     
-    var format: String {
+    public var format: String {
         
         switch self {
         
@@ -43,7 +43,7 @@ public enum DateFormat {
         
     }
     
-    func formatter(in region: DateRegion = DateRegion()) -> DateFormatter {
+    public func formatter(in region: DateRegion = DateRegion()) -> DateFormatter {
         let formatter = DateFormatter()
         formatter.timeZone = region.timezone
         formatter.locale = region.locale
@@ -54,9 +54,15 @@ public enum DateFormat {
 }
 
 public struct DateRegion {
-    var calendar = Calendar.autoupdatingCurrent
-    var timezone = TimeZone.current
-    var locale = Locale.current
+    public var calendar = Calendar.autoupdatingCurrent
+    public var timezone = TimeZone.current
+    public var locale = Locale.current
+    
+    public init(calendar: Calendar = Calendar.autoupdatingCurrent, timezone: TimeZone = TimeZone.current, locale: Locale = Locale.current) {
+        self.calendar = calendar
+        self.timezone = timezone
+        self.locale = locale
+    }
     
     public static func defaultRegion() -> DateRegion {
         DateRegion()
@@ -66,10 +72,15 @@ public struct DateRegion {
 
 public struct DateInRegion {
     
-    var date = Date()
-    var region = DateRegion()
+    public var date = Date()
+    public var region = DateRegion()
  
-    static var defaultFormatter: DateFormatter {
+    public init(date: Date = Date(), region: DateRegion = DateRegion()) {
+        self.date = date
+        self.region = region
+    }
+    
+    public static var defaultFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .full
         formatter.timeStyle = .full
@@ -78,25 +89,25 @@ public struct DateInRegion {
         return formatter
     }
     
-    func isInPast(granularity: Calendar.Component = .nanosecond) -> Bool {
+    public func isInPast(granularity: Calendar.Component = .nanosecond) -> Bool {
         (region.calendar.dateComponents([granularity], from: date, to: Date()).value(for: granularity) ?? 0 > 0)
     }
     
-    func isInFuture(granularity: Calendar.Component = .nanosecond) -> Bool {
+    public func isInFuture(granularity: Calendar.Component = .nanosecond) -> Bool {
         (region.calendar.dateComponents([granularity], from: date, to: Date()).value(for: granularity) ?? 0 < 0)
     }
     
-    func advanced(by granularity: Calendar.Component = .nanosecond, value: Int = 1) -> DateInRegion {
+    public func advanced(by granularity: Calendar.Component = .nanosecond, value: Int = 1) -> DateInRegion {
         DateInRegion(date: (region.calendar
                                 .date(byAdding: granularity, value: value, to: date) ?? date),
                      region: region)
     }
     
-    func difference(to targetDate: DateInRegion = DateInRegion(), granularity: Calendar.Component = .nanosecond) -> Int {
+    public func difference(to targetDate: DateInRegion = DateInRegion(), granularity: Calendar.Component = .nanosecond) -> Int {
         region.calendar.dateComponents([granularity], from: self.date, to: targetDate.date).value(for: granularity) ?? 0
     }
     
-    func formattedStr(formatter: DateFormatter = DateInRegion.defaultFormatter) -> String {
+    public func formattedStr(formatter: DateFormatter = DateInRegion.defaultFormatter) -> String {
         formatter.string(from: self.date)
     }
     
