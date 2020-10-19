@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class HMDATextInputValidator {
+public struct HMDATextInputValidator {
     
     public enum type {
         case none
@@ -16,7 +16,7 @@ public class HMDATextInputValidator {
         case email(String?)
         case number(String?)
         
-        public func validate() -> Bool {
+        public func isValid() -> Bool {
             
             switch self {
                 
@@ -37,7 +37,7 @@ public class HMDATextInputValidator {
         
     }
     
-    fileprivate class func validatePhone(text: String?) -> Bool {
+    fileprivate static func validatePhone(text: String?) -> Bool {
         
         guard text != nil else {
             return true
@@ -60,7 +60,7 @@ public class HMDATextInputValidator {
         return true
     }
     
-    fileprivate class func validateEmail(text: String?) -> Bool {
+    fileprivate static func validateEmail(text: String?) -> Bool {
         
         guard text != nil else {
             return true
@@ -88,7 +88,7 @@ public class HMDATextInputValidator {
         
     }
     
-    fileprivate class func validateNumber(text: String?) -> Bool {
+    fileprivate static func validateNumber(text: String?) -> Bool {
         
         guard text != nil else {
             return true
