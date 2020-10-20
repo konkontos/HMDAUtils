@@ -44,6 +44,8 @@ public struct HMDALayoutDimensionProperty<Dimension: HMDALayoutDimension> {
 }
 
 public class HMDALayoutProxy<V: HMDALayoutViewType> {
+    
+    // DSL shortcuts for NSLayoutAnchor
     public lazy var leading = property(with: view.leadingAnchor)
     public lazy var trailing = property(with: view.trailingAnchor)
     public lazy var top = property(with: view.topAnchor)
@@ -53,6 +55,7 @@ public class HMDALayoutProxy<V: HMDALayoutViewType> {
     public lazy var centerXAnchor = property(with: view.centerXAnchor)
     public lazy var centerYAnchor = property(with: view.centerYAnchor)
     
+    // DSL shortcuts for NSLayoutDimension
     public lazy var widthDimension = dimensionProperty(with: view.widthAnchor)
     public lazy var heightDimension = dimensionProperty(with: view.heightAnchor)
     
