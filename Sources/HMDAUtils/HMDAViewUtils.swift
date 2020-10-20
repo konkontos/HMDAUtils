@@ -15,26 +15,27 @@ import UIKit
 import AppKit
 #endif
 
-public protocol HMDAViewPositionable {
-    
-    func addSubview(_ view: HMDAViewPositionable)
-    func insertSubview(_ view: HMDAViewPositionable, at viewIndex: Int)
-    func insertSubview(_ view: HMDAViewPositionable, aboveSubview relativeView: HMDAViewPositionable)
-    func insertSubview(_ view: HMDAViewPositionable, belowSubview relativeView: HMDAViewPositionable)
-    
-    func added(toView superview: HMDAViewPositionable, positioning: HMDAViewPosition)
-}
+#if canImport(UIKit)
 
 public enum HMDAViewPosition {
-    case above(HMDAViewPositionable)
-    case below(HMDAViewPositionable)
+    case above(UIView)
+    case below(UIView)
     case atIndex(Int)
     case top
 }
 
-public extension HMDAViewPositionable {
+public protocol HMDAViewPositionable {
+    func addSubview(_ view: UIView)
+    func insertSubview(_ view: UIView, at viewIndex: Int)
+    func insertSubview(_ view: UIView, aboveSubview relativeView: UIView)
+    func insertSubview(_ view: UIView, belowSubview relativeView: UIView)
     
-    func added(toView superview: HMDAViewPositionable, positioning: HMDAViewPosition) {
+    func added(toView superview: UIView, positioning: HMDAViewPosition)
+}
+
+public extension UIView {
+    
+    func added(toView superview: UIView, positioning: HMDAViewPosition) {
         
         switch positioning {
         
@@ -56,29 +57,6 @@ public extension HMDAViewPositionable {
     
 }
 
-#if canImport(UIKit)
-
-public extension HMDAViewPositionable where Self: UIView {
-
-    func addSubview<V: HMDAViewPositionable>(_ view: V) {
-        view.addSubview(self)
-    }
-    
-    func insertSubview<V: HMDAViewPositionable>(_ view: V, at viewIndex: Int) {
-        view.insertSubview(self, at: viewIndex)
-    }
-    
-    func insertSubview<V: HMDAViewPositionable>(_ view: V, aboveSubview relativeView: V) {
-        view.insertSubview(self, aboveSubview: relativeView)
-    }
-    
-    func insertSubview<V: HMDAViewPositionable>(_ view: V, belowSubview relativeView: V) {
-        view.insertSubview(self, belowSubview: relativeView)
-    }
-    
-}
-
 extension UIView: HMDAViewPositionable {}
 
 #endif
-
