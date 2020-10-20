@@ -16,6 +16,14 @@ import UIKit
 import AppKit
 #endif
 
+#if canImport(UIKit)
+public typealias HMDALayoutViewType = UIView
+#endif
+
+#if canImport(AppKit)
+public typealias HMDALayoutViewType = NSView
+#endif
+
 
 public protocol HMDALayoutAnchor {
     func constraint(equalTo anchor: Self,
@@ -32,7 +40,7 @@ public struct HMDALayoutProperty<Anchor: HMDALayoutAnchor> {
     fileprivate let anchor: Anchor
 }
 
-public class HMDALayoutProxy {
+public class HMDALayoutProxy<V: HMDALayoutViewType> {
     public lazy var leading = property(with: view.leadingAnchor)
     public lazy var trailing = property(with: view.trailingAnchor)
     public lazy var top = property(with: view.topAnchor)
@@ -40,9 +48,9 @@ public class HMDALayoutProxy {
     public lazy var width = property(with: view.widthAnchor)
     public lazy var height = property(with: view.heightAnchor)
     
-    private let view: UIView
+    private let view: V
     
-    fileprivate init(view: UIView) {
+    fileprivate init(view: V) {
         self.view = view
     }
     
@@ -71,11 +79,13 @@ public extension HMDALayoutProperty {
     }
 }
 
-public extension UIView {
-    func layout(using closure: (HMDALayoutProxy) -> Void) {
+public extension HMDALayoutViewType {
+    
+    func layout(using closure: (HMDALayoutProxy<HMDALayoutViewType>) -> Void) {
         translatesAutoresizingMaskIntoConstraints = false
         closure(HMDALayoutProxy(view: self))
     }
+    
 }
 
 func +<A: HMDALayoutAnchor>(lhs: A, rhs: CGFloat) -> (A, CGFloat) {
