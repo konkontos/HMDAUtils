@@ -27,6 +27,8 @@ public protocol HMDALayoutAnchor {
 
 public protocol HMDALayoutDimension {
     func constraint(equalToConstant c: CGFloat) -> NSLayoutConstraint
+    func constraint(equalTo anchor: Self, multiplier m: CGFloat) -> NSLayoutConstraint
+    func constraint(equalTo anchor: Self, multiplier m: CGFloat, constant c: CGFloat) -> NSLayoutConstraint
 }
 
 extension NSLayoutAnchor: HMDALayoutAnchor {}
@@ -75,6 +77,14 @@ public extension HMDALayoutDimensionProperty {
     
     func constraint(equalToConstant c: CGFloat) {
         dimension.constraint(equalToConstant: c).isActive = true
+    }
+    
+    func constraint(equalTo anchor: Dimension, multiplier m: CGFloat) {
+        dimension.constraint(equalTo: anchor, multiplier: m).isActive = true
+    }
+    
+    func constraint(equalTo anchor: Dimension, multiplier m: CGFloat, constant c: CGFloat) {
+        dimension.constraint(equalTo: anchor, multiplier: m, constant: c).isActive = true
     }
     
 }
