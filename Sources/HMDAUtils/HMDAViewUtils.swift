@@ -93,5 +93,20 @@ public extension HMDALayoutViewType {
     subscript(index: Int) -> UIView? {
         self.viewWithTag(index)
     }
+
+    func removeConstraints(forView childView: HMDALayoutViewType) {
+        
+        var constraintsToBeRemoved = [NSLayoutConstraint]()
+        
+        for constraint in constraints {
+            
+            if (constraint.firstItem as? HMDALayoutViewType) == self || (constraint.secondItem as? HMDALayoutViewType) == self {
+                constraintsToBeRemoved.append(constraint)
+            }
+            
+        }
+        
+        self.removeConstraints(constraintsToBeRemoved)
+    }
     
 }
