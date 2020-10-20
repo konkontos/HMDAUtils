@@ -57,6 +57,6 @@ public extension UIView {
     
 }
 
-extension UIView: HMDAViewPositionable {}
+//extension UIView: HMDAViewPositionable {}
 
 #endif
