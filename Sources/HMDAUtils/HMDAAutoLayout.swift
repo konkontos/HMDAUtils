@@ -88,6 +88,12 @@ public extension HMDALayoutViewType {
         parentView?.removeConstraints(forView: self)
     }
     
+    func remake(using closure: (HMDALayoutProxy<HMDALayoutViewType>) -> Void) {
+        clearConstraints(in: self.superview)
+        translatesAutoresizingMaskIntoConstraints = false
+        closure(HMDALayoutProxy(view: self))
+    }
+    
 }
 
 func +<A: HMDALayoutAnchor>(lhs: A, rhs: CGFloat) -> (A, CGFloat) {
