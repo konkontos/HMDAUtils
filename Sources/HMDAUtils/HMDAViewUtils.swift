@@ -43,7 +43,7 @@ extension UIView: HMDAViewPositionable {
 
 public extension HMDAViewPositionable where Self: UIView {
     
-    func added(toView superview: HMDALayoutViewType, positioning: HMDAViewPosition) {
+    func added(toView superview: HMDALayoutViewType, positioning: HMDAViewPosition) -> HMDALayoutViewType {
         
         switch positioning {
         
@@ -61,6 +61,7 @@ public extension HMDAViewPositionable where Self: UIView {
         
         }
         
+        return self
     }
     
 }
@@ -75,7 +76,7 @@ extension NSView: HMDAViewPositionable {
 
 public extension HMDAViewPositionable where Self: NSView {
     
-    func added(toView superview: HMDALayoutViewType, positioning: HMDAViewPosition) {
+    func added(toView superview: HMDALayoutViewType, positioning: HMDAViewPosition) -> HMDALayoutViewType {
         
         switch positioning {
         
@@ -93,6 +94,7 @@ public extension HMDAViewPositionable where Self: NSView {
         
         }
         
+        return self
     }
     
 }
