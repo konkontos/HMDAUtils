@@ -16,7 +16,7 @@ import UIKit
 import AppKit
 #endif
 
-protocol HMDALayoutAnchor {
+public protocol HMDALayoutAnchor {
     func constraint(equalTo anchor: Self,
                     constant: CGFloat) -> NSLayoutConstraint
     func constraint(greaterThanOrEqualTo anchor: Self,
@@ -27,17 +27,17 @@ protocol HMDALayoutAnchor {
 
 extension NSLayoutAnchor: HMDALayoutAnchor {}
 
-struct HMDALayoutProperty<Anchor: HMDALayoutAnchor> {
+public struct HMDALayoutProperty<Anchor: HMDALayoutAnchor> {
     fileprivate let anchor: Anchor
 }
 
-class HMDALayoutProxy {
-    lazy var leading = property(with: view.leadingAnchor)
-    lazy var trailing = property(with: view.trailingAnchor)
-    lazy var top = property(with: view.topAnchor)
-    lazy var bottom = property(with: view.bottomAnchor)
-    lazy var width = property(with: view.widthAnchor)
-    lazy var height = property(with: view.heightAnchor)
+public class HMDALayoutProxy {
+    public lazy var leading = property(with: view.leadingAnchor)
+    public lazy var trailing = property(with: view.trailingAnchor)
+    public lazy var top = property(with: view.topAnchor)
+    public lazy var bottom = property(with: view.bottomAnchor)
+    public lazy var width = property(with: view.widthAnchor)
+    public lazy var height = property(with: view.heightAnchor)
     
     private let view: UIView
     
@@ -50,7 +50,7 @@ class HMDALayoutProxy {
     }
 }
 
-extension HMDALayoutProperty {
+public extension HMDALayoutProperty {
     func equal(to otherAnchor: Anchor, offsetBy
                 constant: CGFloat = 0) {
         anchor.constraint(equalTo: otherAnchor,
@@ -70,7 +70,7 @@ extension HMDALayoutProperty {
     }
 }
 
-extension UIView {
+public extension UIView {
     func layout(using closure: (HMDALayoutProxy) -> Void) {
         translatesAutoresizingMaskIntoConstraints = false
         closure(HMDALayoutProxy(view: self))

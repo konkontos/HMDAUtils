@@ -78,5 +78,7 @@ public extension HMDAViewPositionable where Self: UIView {
     
 }
 
+extension UIView: HMDAViewPositionable {}
+
 #endif
 
