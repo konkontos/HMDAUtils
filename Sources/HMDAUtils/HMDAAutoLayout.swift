@@ -4,7 +4,7 @@
 //
 //  Created by Konstantinos Kontos on 20/10/20.
 //
-//  Modified: Originally by: https://www.swiftbysundell.com/articles/building-dsls-in-swift/
+//  Modified and extended: Originally and inspired by: https://www.swiftbysundell.com/articles/building-dsls-in-swift/
 
 import Foundation
 
@@ -38,6 +38,8 @@ public class HMDALayoutProxy<V: HMDALayoutViewType> {
     public lazy var bottom = property(with: view.bottomAnchor)
     public lazy var width = property(with: view.widthAnchor)
     public lazy var height = property(with: view.heightAnchor)
+    public lazy var centerXAnchor = property(with: view.centerXAnchor)
+    public lazy var centerYAnchor = property(with: view.centerYAnchor)
     
     private let view: V
     
