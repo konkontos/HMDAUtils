@@ -23,9 +23,9 @@ public typealias HMDALayoutViewType = UIView
 public typealias HMDALayoutViewType = NSView
 #endif
 
-public enum HMDAViewPosition<V: HMDAViewPositionable> {
-    case above(V)
-    case below(V)
+public enum HMDAViewPosition {
+    case above(HMDALayoutViewType)
+    case below(HMDALayoutViewType)
     case atIndex(Int)
     case top
 }
@@ -37,12 +37,13 @@ public protocol HMDAViewPositionable {
 #if canImport(UIKit)
 
 extension UIView: HMDAViewPositionable {
-    public typealias ViewType = UIView
+    public typealias ViewType = HMDALayoutViewType
 }
+
 
 public extension HMDAViewPositionable where Self: UIView {
     
-    func added<V: HMDALayoutViewType>(toView superview: V, positioning: HMDAViewPosition<V>) {
+    func added(toView superview: HMDALayoutViewType, positioning: HMDAViewPosition) {
         
         switch positioning {
         
@@ -69,12 +70,12 @@ public extension HMDAViewPositionable where Self: UIView {
 #if canImport(AppKit)
 
 extension NSView: HMDAViewPositionable {
-    public typealias ViewType = NSView
+    public typealias ViewType = HMDALayoutViewType
 }
 
 public extension HMDAViewPositionable where Self: NSView {
     
-    func added<V: HMDALayoutViewType>(toView superview: V, positioning: HMDAViewPosition<V>) {
+    func added(toView superview: HMDALayoutViewType, positioning: HMDAViewPosition) {
         
         switch positioning {
         
