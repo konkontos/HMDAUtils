@@ -90,7 +90,7 @@ public extension HMDALayoutViewType {
 
 public extension HMDALayoutViewType {
     
-    subscript(index: Int) -> UIView? {
+    subscript(index: Int) -> HMDALayoutViewType? {
         self.viewWithTag(index)
     }
 
@@ -107,6 +107,18 @@ public extension HMDALayoutViewType {
         }
         
         NSLayoutConstraint.deactivate(constraintsToBeRemoved)
+    }
+    
+}
+
+public extension Sequence where Element == HMDALayoutViewType {
+    
+    func subview(tag: Int) -> HMDALayoutViewType? {
+        
+        self.filter { (subview) -> Bool in
+            subview.tag == tag
+        }.first
+        
     }
     
 }
