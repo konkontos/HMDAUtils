@@ -53,6 +53,7 @@ public class HMDALayoutProxy<V: HMDALayoutViewType> {
 }
 
 public extension HMDALayoutProperty {
+    
     func equal(to otherAnchor: Anchor, offsetBy
                 constant: CGFloat = 0) {
         anchor.constraint(equalTo: otherAnchor,
@@ -70,6 +71,7 @@ public extension HMDALayoutProperty {
         anchor.constraint(lessThanOrEqualTo: otherAnchor,
                           constant: constant).isActive = true
     }
+    
 }
 
 public extension HMDALayoutViewType {
