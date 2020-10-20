@@ -86,3 +86,12 @@ public extension HMDALayoutViewType {
     
 }
 #endif
+
+
+public extension HMDALayoutViewType {
+    
+    subscript(index: Int) -> UIView? {
+        self.viewWithTag(index)
+    }
+    
+}
