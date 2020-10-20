@@ -25,10 +25,20 @@ public protocol HMDALayoutAnchor {
                     constant: CGFloat) -> NSLayoutConstraint
 }
 
+public protocol HMDALayoutDimension {
+    func constraint(equalToConstant c: CGFloat) -> NSLayoutConstraint
+}
+
 extension NSLayoutAnchor: HMDALayoutAnchor {}
+
+extension NSLayoutDimension: HMDALayoutDimension {}
 
 public struct HMDALayoutProperty<Anchor: HMDALayoutAnchor> {
     fileprivate let anchor: Anchor
+}
+
+public struct HMDALayoutDimensionProperty<Dimension: HMDALayoutDimension> {
+    fileprivate let dimension: Dimension
 }
 
 public class HMDALayoutProxy<V: HMDALayoutViewType> {
@@ -41,6 +51,9 @@ public class HMDALayoutProxy<V: HMDALayoutViewType> {
     public lazy var centerXAnchor = property(with: view.centerXAnchor)
     public lazy var centerYAnchor = property(with: view.centerYAnchor)
     
+    public lazy var widthDimension = dimensionProperty(with: view.widthAnchor)
+    public lazy var heightDimension = dimensionProperty(with: view.heightAnchor)
+    
     private let view: V
     
     fileprivate init(view: V) {
@@ -50,7 +63,22 @@ public class HMDALayoutProxy<V: HMDALayoutViewType> {
     private func property<A: HMDALayoutAnchor>(with anchor: A) -> HMDALayoutProperty<A> {
         return HMDALayoutProperty(anchor: anchor)
     }
+    
+    private func dimensionProperty<A: HMDALayoutDimension>(with dimension: A) -> HMDALayoutDimensionProperty<A> {
+        return HMDALayoutDimensionProperty(dimension: dimension)
+    }
+    
 }
+
+
+public extension HMDALayoutDimensionProperty {
+    
+    func constraint(equalToConstant c: CGFloat) {
+        dimension.constraint(equalToConstant: c).isActive = true
+    }
+    
+}
+
 
 public extension HMDALayoutProperty {
     
