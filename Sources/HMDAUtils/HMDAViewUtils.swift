@@ -15,27 +15,27 @@ import UIKit
 import AppKit
 #endif
 
-#if canImport(UIKit)
-
-public enum HMDAViewPosition {
-    case above(UIView)
-    case below(UIView)
+public enum HMDAViewPosition<V: HMDAViewPositionable> {
+    case above(V)
+    case below(V)
     case atIndex(Int)
     case top
 }
 
 public protocol HMDAViewPositionable {
-    func addSubview(_ view: UIView)
-    func insertSubview(_ view: UIView, at viewIndex: Int)
-    func insertSubview(_ view: UIView, aboveSubview relativeView: UIView)
-    func insertSubview(_ view: UIView, belowSubview relativeView: UIView)
-    
-    func added(toView superview: UIView, positioning: HMDAViewPosition)
+    associatedtype ViewType
 }
 
-public extension UIView {
+#if canImport(UIKit)
+
+extension UIView: HMDAViewPositionable {
+    public typealias ViewType = UIView
+}
+
+
+public extension HMDAViewPositionable where Self: UIView {
     
-    func added(toView superview: UIView, positioning: HMDAViewPosition) {
+    func added<V: UIView>(toView superview: V, positioning: HMDAViewPosition<V>) {
         
         switch positioning {
         
@@ -57,6 +57,7 @@ public extension UIView {
     
 }
 
-//extension UIView: HMDAViewPositionable {}
-
 #endif
+
+
+
