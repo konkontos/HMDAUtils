@@ -23,7 +23,6 @@ public protocol HMDAViewPositionable {
     func insertSubview(_ view: HMDAViewPositionable, belowSubview relativeView: HMDAViewPositionable)
     
     func added(toView superview: HMDAViewPositionable, positioning: HMDAViewPosition)
-    
 }
 
 public enum HMDAViewPosition {
@@ -34,6 +33,32 @@ public enum HMDAViewPosition {
 }
 
 public extension HMDAViewPositionable {
+    
+    func added(toView superview: HMDAViewPositionable, positioning: HMDAViewPosition) {
+        
+        switch positioning {
+        
+        case .top:
+            superview.addSubview(self)
+            
+        case .atIndex(let index):
+            superview.insertSubview(self, at: index)
+            
+        case .above(let relativeView):
+            superview.insertSubview(self, aboveSubview: relativeView)
+            
+        case .below(let relativeView):
+            superview.insertSubview(self, belowSubview: relativeView)
+        
+        }
+        
+    }
+    
+}
+
+#if canImport(UIKit)
+
+public extension HMDAViewPositionable where Self: UIView {
 
     func addSubview<V: HMDAViewPositionable>(_ view: V) {
         view.addSubview(self)
@@ -51,60 +76,7 @@ public extension HMDAViewPositionable {
         view.insertSubview(self, belowSubview: relativeView)
     }
     
-    
-    #if canImport(UIKit)
-    @available(iOS 9.0, tvOS 9.0, *)
-    func added(toView superview: HMDAViewPositionable, positioning: HMDAViewPosition) {
-        
-        switch positioning {
-        
-        case .top:
-            superview.addSubview(self)
-            
-        case .atIndex(let viewIndex):
-            superview.insertSubview(self, at: viewIndex)
-            
-        case .above(let relativeView):
-            superview.insertSubview(self, aboveSubview: relativeView)
-            
-        case .below(let relativeView):
-            superview.insertSubview(self, belowSubview: relativeView)
-        
-        }
-        
-    }
-    #endif
-    
-    #warning("FIX macOS (NSView) implementations")
-    
-    #if canImport(AppKit)
-    @available(macOS 11.0, *)
-    func added(toView superview: HMDAViewPositionable, positioning: HMDAViewPosition) {
-        
-        switch positioning {
-        
-        case .top:
-            superview.addSubview(self)
-            
-        case .atIndex(let viewIndex):
-            superview.insertSubview(self, at: viewIndex)
-            
-        case .above(let relativeView):
-            superview.insertSubview(self, aboveSubview: relativeView)
-            
-        case .below(let relativeView):
-            superview.insertSubview(self, belowSubview: relativeView)
-        
-        }
-        
-    }
-    #endif
-    
 }
 
-#if canImport(UIKit)
-
-extension UIView: HMDAViewPositionable {}
-    
 #endif
 
