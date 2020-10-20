@@ -82,7 +82,9 @@ public extension HMDALayoutViewType {
     }
     
     func clearConstraints(in parentView: HMDALayoutViewType? = nil) {
-        self.removeConstraints(self.constraints)
+        NSLayoutConstraint.deactivate(self.constraints.filter { (constraint) -> Bool in
+            (constraint.secondItem != nil ? true : false)
+        })
         parentView?.removeConstraints(forView: self)
     }
     

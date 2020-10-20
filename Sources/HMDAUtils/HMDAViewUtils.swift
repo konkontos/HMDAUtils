@@ -106,7 +106,7 @@ public extension HMDALayoutViewType {
             
         }
         
-        self.removeConstraints(constraintsToBeRemoved)
+        NSLayoutConstraint.deactivate(constraintsToBeRemoved)
     }
     
 }
