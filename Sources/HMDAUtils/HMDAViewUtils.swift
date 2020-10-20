@@ -32,7 +32,6 @@ extension UIView: HMDAViewPositionable {
     public typealias ViewType = UIView
 }
 
-
 public extension HMDAViewPositionable where Self: UIView {
     
     func added<V: UIView>(toView superview: V, positioning: HMDAViewPosition<V>) {
@@ -59,5 +58,33 @@ public extension HMDAViewPositionable where Self: UIView {
 
 #endif
 
+#if canImport(AppKit)
 
+extension NSView: HMDAViewPositionable {
+    public typealias ViewType = NSView
+}
 
+public extension HMDAViewPositionable where Self: NSView {
+    
+    func added<V: NSView>(toView superview: V, positioning: HMDAViewPosition<V>) {
+        
+        switch positioning {
+        
+        case .top:
+            superview.addSubview(self)
+            
+        case .atIndex:
+            superview.addSubview(self)
+            
+        case .above(let relativeView):
+            superview.addSubview(self, positioned: .above, relativeTo: relativeView)
+            
+        case .below(let relativeView):
+            superview.addSubview(self, positioned: .below, relativeTo: relativeView)
+        
+        }
+        
+    }
+    
+}
+#endif

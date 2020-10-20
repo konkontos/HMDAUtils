@@ -16,7 +16,6 @@ import UIKit
 import AppKit
 #endif
 
-/*
 
 public protocol HMDALayoutAnchor {
     func constraint(equalTo anchor: Self,
@@ -113,4 +112,3 @@ func <=<A: HMDALayoutAnchor>(lhs: HMDALayoutProperty<A>,
 func <=<A: HMDALayoutAnchor>(lhs: HMDALayoutProperty<A>, rhs: A) {
     lhs.lessThanOrEqual(to: rhs)
 }
-*/
