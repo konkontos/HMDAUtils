@@ -15,6 +15,14 @@ import UIKit
 import AppKit
 #endif
 
+#if canImport(UIKit)
+public typealias HMDALayoutViewType = UIView
+#endif
+
+#if canImport(AppKit)
+public typealias HMDALayoutViewType = NSView
+#endif
+
 public enum HMDAViewPosition<V: HMDAViewPositionable> {
     case above(V)
     case below(V)
@@ -34,7 +42,7 @@ extension UIView: HMDAViewPositionable {
 
 public extension HMDAViewPositionable where Self: UIView {
     
-    func added<V: UIView>(toView superview: V, positioning: HMDAViewPosition<V>) {
+    func added<V: HMDALayoutViewType>(toView superview: V, positioning: HMDAViewPosition<V>) {
         
         switch positioning {
         
@@ -66,7 +74,7 @@ extension NSView: HMDAViewPositionable {
 
 public extension HMDAViewPositionable where Self: NSView {
     
-    func added<V: NSView>(toView superview: V, positioning: HMDAViewPosition<V>) {
+    func added<V: HMDALayoutViewType>(toView superview: V, positioning: HMDAViewPosition<V>) {
         
         switch positioning {
         

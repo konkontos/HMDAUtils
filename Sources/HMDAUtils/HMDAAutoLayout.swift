@@ -16,15 +16,6 @@ import UIKit
 import AppKit
 #endif
 
-#if canImport(UIKit)
-public typealias HMDALayoutViewType = UIView
-#endif
-
-#if canImport(AppKit)
-public typealias HMDALayoutViewType = NSView
-#endif
-
-
 public protocol HMDALayoutAnchor {
     func constraint(equalTo anchor: Self,
                     constant: CGFloat) -> NSLayoutConstraint
