@@ -14,6 +14,6 @@ An evolving collection of extensions and utilities for common tasks on os pla
 
 Currently working towards a stable v1.0.
 
-Documentation: n/a (to be added)
+Documentation: in progress
 
 Test coverage: in progress
