@@ -1,5 +1,5 @@
 //
-//  HMDAReachability.swift
+//  HMDAJSONUtils.swift
 //  HMDAUtils
 //
 //  Created by Konstantinos Kontos on 20/09/2016.

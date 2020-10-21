@@ -1,5 +1,5 @@
 //
-//  HMDADebugNewMacros.swift
+//  HMDADebugMacros.swift
 //  HMDAUtils
 //
 //  Created by Konstantinos Kontos on 28/06/2018.
