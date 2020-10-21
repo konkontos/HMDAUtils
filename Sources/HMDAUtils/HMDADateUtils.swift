@@ -11,50 +11,33 @@ import Foundation
 
 public class HMDADate {
     
-    public enum DateFormat {
-        case simpleDateOnly
-        case simpleDateTime
-        case full
-        case fullWeekday
-        case iso8601DateOnly
-        case iso8601DateTime
+    /// Encapsulates common date formats
+    public enum DateFormat: String {
+        case simpleDateOnly = "dd/MM/yyyy"
+        case simpleDateTime = "dd/MM/yyyy HH:mm"
+        case full = "dd MMMM, yyyy HH:mm"
+        case fullWeekday = "EEEE dd MMMM, yyyy HH:mm"
+        case iso8601DateOnly = "YYYY-MM-dd"
+        case iso8601DateTime = "YYYY-MM-dd HH:mm:ss"
         
-        public var format: String {
-            
-            switch self {
-            
-            case .simpleDateOnly:
-                return "dd/MM/yyyy"
-                
-            case .simpleDateTime:
-                return "dd/MM/yyyy HH:mm"
-                
-            case .full:
-                return "dd MMMM, yyyy HH:mm"
-                
-            case .fullWeekday:
-                return "EEEE dd MMMM, yyyy HH:mm"
-                
-            case .iso8601DateOnly:
-                return "YYYY-MM-dd"
-                
-            case .iso8601DateTime:
-                return "YYYY-MM-dd HH:mm:ss"
-            
-            }
-            
-        }
         
+        /// Returns a date formatter for the specified case
+        /// - Parameter region: a DateRegion struct
+        /// - Returns: a DateFormatter with local,
+        /// timezone according to the specified date region
         public func formatter(in region: DateRegion = DateRegion()) -> DateFormatter {
             let formatter = DateFormatter()
             formatter.timeZone = region.timezone
             formatter.locale = region.locale
-            formatter.dateFormat = self.format
+            formatter.dateFormat = self.rawValue
             return formatter
         }
         
     }
     
+    
+    /// A struct that groups a calendar,
+    /// a timezone and a locale into a logical unit.
     public struct DateRegion {
         public var calendar = Calendar.autoupdatingCurrent
         public var timezone = TimeZone.current
@@ -66,12 +49,21 @@ public class HMDADate {
             self.locale = locale
         }
         
+        
+        /// Convenience that returns a DateRegion configured
+        /// for current autoupdating calendar, locale and timezone.
+        /// - Returns: DateRegion
         public static func defaultRegion() -> DateRegion {
             DateRegion()
         }
         
     }
 
+    
+    /// A struct that groups a DateRegion
+    /// and a Date into a logical unit.
+    ///
+    /// It provides core date calculation utilities.
     public struct DateInRegion {
         
         public var date = Date()
@@ -159,6 +151,10 @@ public extension HMDADate.DateInRegion {
 
 public extension Date {
     
+    
+    /// Convenience method to convert a Date into a DateInRegion
+    /// - Parameter region: DateRegion
+    /// - Returns: DateInRegion
     func regionalDate(in region: HMDADate.DateRegion = HMDADate.DateRegion.defaultRegion()) -> HMDADate.DateInRegion {
         HMDADate.DateInRegion(date: self, region: region)
     }
