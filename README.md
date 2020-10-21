@@ -9,7 +9,6 @@
 An evolving collection of extensions and utilities for common tasks on os platforms.
 
 
-
 ## Current State
 
 Currently working towards a stable v1.0.
