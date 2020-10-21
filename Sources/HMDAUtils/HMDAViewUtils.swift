@@ -113,7 +113,7 @@ public extension HMDALayoutViewType {
 
 public extension Sequence where Element == HMDALayoutViewType {
     
-    func subview(tag: Int) -> HMDALayoutViewType? {
+    func with(tag: Int) -> HMDALayoutViewType? {
         
         self.filter { (subview) -> Bool in
             subview.tag == tag
