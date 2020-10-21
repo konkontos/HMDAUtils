@@ -4,15 +4,15 @@
 //
 //  Created by Konstantinos Kontos on 20/10/20.
 //
-//  Modified and extended: Originally and inspired by: https://www.swiftbysundell.com/articles/building-dsls-in-swift/
+//  Adapted from original code at: https://www.swiftbysundell.com/articles/building-dsls-in-swift/
 
 import Foundation
 
-#if canImport(UIKit)
+#if os(iOS) || os(tvOS)
 import UIKit
 #endif
 
-#if canImport(AppKit)
+#if os(macOS)
 import AppKit
 #endif
 

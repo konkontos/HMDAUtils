@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+#if canImport(SystemConfiguration)
 import SystemConfiguration
 
 public extension NSNotification.Name {
@@ -178,3 +180,4 @@ public class HMDAReachability: NSObject {
     }
     
 }
+#endif

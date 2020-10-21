@@ -5,7 +5,9 @@
 //  Created by Konstantinos Kontos on 16/10/20.
 //
 
+#if canImport(SwiftUI)
 import SwiftUI
+#endif
 
 #if canImport(UIKit)
 import UIKit
@@ -16,8 +18,8 @@ import Cocoa
 #endif
 
 
-#if canImport(UIKit)
-@available(iOS 13, *)
+#if canImport(SwiftUI)
+@available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, macCatalyst 13, *)
 public struct FontModifier: ViewModifier {
     
     var font: UIFont
@@ -28,7 +30,7 @@ public struct FontModifier: ViewModifier {
     
 }
 
-@available(iOS 13, *)
+@available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, macCatalyst 13, *)
 public extension UIFont {
     
     var swiftUIModifier: FontModifier {
@@ -36,13 +38,8 @@ public extension UIFont {
     }
     
 }
-#endif
 
-
-//@available(iOS 13, macOS 10.15, *)
-
-#if os(iOS)
-@available(iOS 13, *)
+@available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, macCatalyst 13, *)
 public struct TextFieldWithEraseButton: ViewModifier {
     
     var color: Color

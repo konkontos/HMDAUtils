@@ -7,19 +7,19 @@
 
 import Foundation
 
-#if canImport(UIKit)
+#if os(iOS) || os(tvOS)
 import UIKit
 #endif
 
-#if canImport(AppKit)
+#if os(macOS)
 import AppKit
 #endif
 
-#if canImport(UIKit)
+#if os(iOS) || os(tvOS)
 public typealias HMDALayoutViewType = UIView
 #endif
 
-#if canImport(AppKit)
+#if os(macOS)
 public typealias HMDALayoutViewType = NSView
 #endif
 
@@ -30,10 +30,8 @@ public enum HMDAViewPosition {
     case top
 }
 
-#if canImport(UIKit)
-
+#if os(iOS) || os(tvOS)
 public extension HMDALayoutViewType {
-    
     func added(toView superview: HMDALayoutViewType, positioning: HMDAViewPosition) -> Self {
         
         switch positioning {
@@ -54,13 +52,10 @@ public extension HMDALayoutViewType {
         
         return self
     }
-    
 }
-
 #endif
 
-#if canImport(AppKit)
-
+#if os(macOS)
 public extension HMDALayoutViewType {
     
     func added(toView superview: HMDALayoutViewType, positioning: HMDAViewPosition) -> Self {

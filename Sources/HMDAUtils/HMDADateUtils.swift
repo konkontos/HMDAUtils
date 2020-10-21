@@ -5,7 +5,7 @@
 //
 //  Created by Konstantinos Kontos on 17/10/20.
 //
-// Inspired by : https://github.com/malcommac/SwiftDate
+// Inspired by original code at: https://github.com/malcommac/SwiftDate
 
 import Foundation
 
