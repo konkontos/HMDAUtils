@@ -6,8 +6,10 @@
 //
 
 import Foundation
-import os
 
+#if canImport(os)
+import os
+#endif
 
 public enum OSLogPromptCharacter: String {
     case debug = "📢"
@@ -15,20 +17,24 @@ public enum OSLogPromptCharacter: String {
     case info = "🔵"
 }
 
-#if DEBUG
+#if canImport(os) && DEBUG
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogDebug(_ argStr: String) {
     os_log("📢 DEBUG: %@", log: OSLog.default, type: .debug, argStr)
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogError(_ argStr: String) {
     os_log("❗️ ERROR: %@", log: OSLog.default, type: .default, argStr)
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogInfo(_ argStr: String) {
     os_log("🔵 INFO: %@", log: OSLog.default, type: .info, argStr)
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogDebug(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...) {
     
     if logger == nil {
@@ -39,6 +45,7 @@ public func OSLogDebug(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...
     
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogError(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...) {
     
     if logger == nil {
@@ -49,6 +56,7 @@ public func OSLogError(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...
     
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogInfo(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...) {
     
     if logger == nil {
@@ -59,12 +67,14 @@ public func OSLogInfo(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...)
     
 }
 
-#elseif DEBUG_ERROR
+#elseif canImport(os) && DEBUG_ERROR
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogError(_ argStr: String) {
     os_log("❗️ ERROR: %@", log: OSLog.default, type: .default, argStr)
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogError(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...) {
     
     if logger == nil {
@@ -75,28 +85,34 @@ public func OSLogError(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...
     
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogDebug(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...) {
     
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogInfo(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...) {
     
 }
 
-#elseif DEBUG_INFO
+#elseif canImport(os) && DEBUG_INFO
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogInfo(_ argStr: String) {
     os_log("🔵 INFO: %@", log: OSLog.default, type: .info, argStr)
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogDebug(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...) {
     
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogError(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...) {
     
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogInfo(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...) {
     
     if logger == nil {
@@ -107,28 +123,34 @@ public func OSLogInfo(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...)
     
 }
 
-#else
+#elseif canImport(os)
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogDebug(_ argStr: String) {
     
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogError(_ argStr: String) {
     
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogInfo(_ argStr: String) {
     
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogDebug(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...) {
     
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogError(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...) {
     
 }
 
+@available(iOS 14, macOS 10.10, tvOS 14, watchOS 7, macCatalyst 13, *)
 public func OSLogInfo(logger:OSLog?, _ format:StaticString?, _ args: CVarArg...) {
     
 }
