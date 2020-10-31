@@ -90,6 +90,19 @@ final class HMDADateUtilsTests: XCTestCase {
         XCTAssert(dateB.isWeekend)
     }
     
+    func testDateAtStartOf() throws {
+        var date = HMDADate.DateInRegion(date: Date(timeIntervalSince1970: 0), region: HMDADate.DateRegion())
+        date = date.advanced(by: .year, value: 1)
+        date = date.advanced(by: .month, value: 7)
+        date = date.advanced(by: .day, value: 12)
+        
+        XCTAssert(date.dateAtStartOf(component: .year).dateComponents.year == 1971)
+        
+        XCTAssert(date.dateAtStartOf(component: .month).dateComponents.month == 8)
+        
+        XCTAssert(date.dateAtStartOf(component: .weekOfMonth).dateComponents.day == 9)
+    }
+    
     
 /*
     func testPerformanceExample() throws {

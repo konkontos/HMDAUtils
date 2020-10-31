@@ -64,7 +64,7 @@ public class HMDADate {
     /// and a Date into a logical unit.
     ///
     /// It provides core date calculation utilities.
-    public struct DateInRegion {
+    public struct DateInRegion: Comparable {
         
         public var date = Date()
         public var region = DateRegion()
@@ -72,6 +72,42 @@ public class HMDADate {
         public init(date: Date = Date(), region: DateRegion = DateRegion()) {
             self.date = date
             self.region = region
+        }
+        
+        public var dateComponents: DateComponents {
+            self.region.calendar.dateComponents(
+                [.day, .era, .hour, .minute, .month, .nanosecond, .quarter, .second,
+                 .timeZone, .weekOfMonth, .weekOfYear, .weekday, .weekdayOrdinal, .year, .yearForWeekOfYear],
+                from: self.date)
+        }
+        
+        public init(year: Int, month: Int, day: Int) {
+            self.region = DateRegion()
+            self.date = self.region
+                .calendar
+                .date(from: DateComponents(calendar: Calendar.autoupdatingCurrent,
+                                                           timeZone: TimeZone.autoupdatingCurrent,
+                                                           year: year,
+                                                           month: month,
+                                                           day: day)) ?? Date()
+        }
+                
+        public func dateAtStartOf(component: Calendar.Component) -> DateInRegion {
+            var start: NSDate?
+            var interval: TimeInterval = 0
+            
+            if (self.region.calendar as NSCalendar).range(of: component.calendarUnit,
+                                                       start: &start,
+                                                       interval: &interval,
+                                                       for: self.date) {
+                
+                if start != nil {
+                    return DateInRegion(date: start! as Date, region: self.region)
+                }
+                
+            }
+            
+            return self
         }
         
         public static var defaultFormatter: DateFormatter {
@@ -105,13 +141,23 @@ public class HMDADate {
             formatter.string(from: self.date)
         }
         
+        // Comparable protocol
+        public static func < (lhs: HMDADate.DateInRegion, rhs: HMDADate.DateInRegion) -> Bool {
+            lhs.date.compare(rhs.date) == .orderedAscending
+        }
+        
+        public static func == (lhs: HMDADate.DateInRegion, rhs: HMDADate.DateInRegion) -> Bool {
+            lhs.date.compare(rhs.date) == .orderedSame
+        }
+        
     }
     
 }
 
 public extension HMDADate.DateInRegion {
     
-    static func regionalDate(from dateComponents: DateComponents, in region: HMDADate.DateRegion = HMDADate.DateRegion.defaultRegion()) -> HMDADate.DateInRegion {
+    static func regionalDate(from dateComponents: DateComponents,
+                             in region: HMDADate.DateRegion = HMDADate.DateRegion.defaultRegion()) -> HMDADate.DateInRegion {
         var regionalDate = HMDADate.DateInRegion()
         regionalDate.region = region
         regionalDate.date = region.calendar.date(from: dateComponents) ?? regionalDate.date
@@ -157,6 +203,69 @@ public extension Date {
     /// - Returns: DateInRegion
     func regionalDate(in region: HMDADate.DateRegion = HMDADate.DateRegion.defaultRegion()) -> HMDADate.DateInRegion {
         HMDADate.DateInRegion(date: self, region: region)
+    }
+    
+}
+
+public extension Calendar.Component {
+    
+    var calendarUnit: NSCalendar.Unit {
+        
+        switch self {
+        
+        case .calendar:
+            return .calendar
+            
+        case .day:
+            return .day
+            
+        case .era:
+            return .era
+            
+        case .hour:
+            return .hour
+            
+        case .minute:
+            return .minute
+            
+        case .month:
+            return .month
+            
+        case .nanosecond:
+            return .nanosecond
+            
+        case .quarter:
+            return .quarter
+            
+        case .second:
+            return .second
+            
+        case .timeZone:
+            return .timeZone
+            
+        case .weekOfMonth:
+            return .weekOfMonth
+            
+        case .weekOfYear:
+            return .weekOfYear
+            
+        case .weekday:
+            return .weekday
+            
+        case .weekdayOrdinal:
+            return .weekdayOrdinal
+            
+        case .year:
+            return .year
+            
+        case .yearForWeekOfYear:
+            return .yearForWeekOfYear
+            
+        default:
+            return .day
+        
+        }
+        
     }
     
 }
