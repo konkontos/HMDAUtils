@@ -718,3 +718,11 @@ struct TemporaryFile {
     }
 }
 
+
+public extension Sequence where Self.Element: Hashable {
+    
+    var containsDuplicates: Bool {
+        Dictionary(grouping: self){$0}.filter {$1.count > 1}.keys.count > 0
+    }
+    
+}
