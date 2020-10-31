@@ -18,7 +18,7 @@ import Cocoa
 #endif
 
 
-#if canImport(SwiftUI)
+#if canImport(SwiftUI) && canImport(UIKit)
 @available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, macCatalyst 13, *)
 public struct FontModifier: ViewModifier {
     
@@ -29,7 +29,9 @@ public struct FontModifier: ViewModifier {
     }
     
 }
+#endif
 
+#if canImport(SwiftUI)
 @available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, macCatalyst 13, *)
 public extension UIFont {
     
@@ -38,8 +40,10 @@ public extension UIFont {
     }
     
 }
+#endif
 
-@available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, macCatalyst 13, *)
+#if canImport(SwiftUI)
+@available(iOS 13, tvOS 13, watchOS 6, macCatalyst 13, *)
 public struct TextFieldWithEraseButton: ViewModifier {
     
     var color: Color
