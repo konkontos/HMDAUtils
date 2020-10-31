@@ -19,7 +19,7 @@ import Cocoa
 
 
 #if canImport(SwiftUI) && canImport(UIKit)
-@available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, macCatalyst 13, *)
+@available(iOS 13, tvOS 13, watchOS 6, macCatalyst 13, *)
 public struct FontModifier: ViewModifier {
     
     var font: UIFont
@@ -31,8 +31,9 @@ public struct FontModifier: ViewModifier {
 }
 #endif
 
-#if canImport(SwiftUI)
-@available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, macCatalyst 13, *)
+
+#if canImport(SwiftUI) && canImport(UIKit)
+@available(iOS 13, tvOS 13, watchOS 6, macCatalyst 13, *)
 public extension UIFont {
     
     var swiftUIModifier: FontModifier {
@@ -42,8 +43,9 @@ public extension UIFont {
 }
 #endif
 
+
 #if canImport(SwiftUI)
-@available(iOS 13, tvOS 13, watchOS 6, macCatalyst 13, *)
+@available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, macCatalyst 13, *)
 public struct TextFieldWithEraseButton: ViewModifier {
     
     var color: Color
@@ -64,9 +66,13 @@ public struct TextFieldWithEraseButton: ViewModifier {
             self.text = ""
             self.closure?()
         }) {
-            
+                #if !(os(macOS))
                 Image(systemName: "xmark.circle.fill").padding([.trailing], 8.0)
-            
+                #else
+                // Specify for macOS
+                Text("N/A")
+                #endif
+                
             },
             alignment: .trailing)
             .foregroundColor(color)
