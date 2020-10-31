@@ -119,6 +119,10 @@ public extension URL {
         return try? String(contentsOf: self)
     }
     
+    var filenameWithoutExtension: String {
+        return self.deletingPathExtension().lastPathComponent
+    }
+    
     #if canImport(UIKit)
     var imageContents: UIImage? {
         return UIImage(contentsOfFile: self.path)
